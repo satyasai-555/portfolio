@@ -15,7 +15,7 @@ export class ContactController {
 
   @Post()
   @HttpCode(HttpStatus.OK)
-  @Throttle({ default: { limit: 3, ttl: 60000 } })
+  @Throttle({ global: { limit: 3, ttl: 60000 } })
   async submit(@Body() dto: CreateContactDto) {
     await this.contactService.submit(dto)
     return { success: true, message: 'Message received. I will get back to you soon.' }

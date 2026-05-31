@@ -22,27 +22,32 @@ export class ContactService {
       return
     }
 
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST ?? 'smtp.gmail.com',
-      port: Number(process.env.SMTP_PORT ?? 587),
-      secure: false,
-      auth: { user: smtpUser, pass: smtpPass },
-    })
+    try {
+      const transporter = nodemailer.createTransport({
+        host: process.env.SMTP_HOST ?? 'smtp.gmail.com',
+        port: Number(process.env.SMTP_PORT ?? 587),
+        secure: false,
+        auth: { user: smtpUser, pass: smtpPass },
+      })
 
-    await transporter.sendMail({
-      from: `"Portfolio Contact" <${smtpUser}>`,
-      to: mailTo,
-      replyTo: dto.email,
-      subject: `Portfolio message from ${dto.name}`,
-      text: `Name: ${dto.name}\nEmail: ${dto.email}\n\n${dto.message}`,
-      html: `
-        <p><strong>Name:</strong> ${dto.name}</p>
-        <p><strong>Email:</strong> <a href="mailto:${dto.email}">${dto.email}</a></p>
-        <hr />
-        <p>${dto.message.replace(/\n/g, '<br />')}</p>
-      `,
-    })
+      await transporter.sendMail({
+        from: `"Portfolio Contact" <${smtpUser}>`,
+        to: mailTo,
+        replyTo: dto.email,
+        subject: `Portfolio message from ${dto.name}`,
+        text: `Name: ${dto.name}\nEmail: ${dto.email}\n\n${dto.message}`,
+        html: `
+          <p><strong>Name:</strong> ${dto.name}</p>
+          <p><strong>Email:</strong> <a href="mailto:${dto.email}">${dto.email}</a></p>
+          <hr />
+          <p>${dto.message.replace(/\n/g, '<br />')}</p>
+        `,
+      })
 
-    this.logger.log(`Email delivered to ${mailTo}`)
+      this.logger.log(`Email delivered to ${mailTo}`)
+    } catch (err) {
+      this.logger.error(`Failed to send email: ${(err as Error).message}`)
+      this.logger.log(`Fallback — message from ${dto.name} <${dto.email}>:\n${dto.message}`)
+    }
   }
 }

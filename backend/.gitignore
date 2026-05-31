@@ -1,0 +1,18 @@
+# Dependencies
+node_modules/
+
+# Compiled output
+dist/
+
+# Environment variables — copy .env.example → .env and fill in real values
+.env
+.env.*.local
+.env.production
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db

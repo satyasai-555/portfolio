@@ -10,7 +10,7 @@ export default function Education() {
     <section id="education" className="py-24 px-6 border-t border-[#111]">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''}`}>
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             Education
           </span>
           <h2 className="text-3xl font-bold text-[#e8e8e8] mb-14">Academic Background</h2>
@@ -19,7 +19,7 @@ export default function Education() {
             {education.map((edu) => (
               <div
                 key={edu.degree}
-                className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#252525] transition-colors duration-300"
+                className="card-lift bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#2a2a2a]"
               >
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="w-9 h-9 rounded-lg bg-[#3b82f6]/10 border border-[#3b82f6]/20 flex items-center justify-center flex-shrink-0">

@@ -19,7 +19,7 @@ export default function About() {
           ref={ref}
           className={`reveal ${inView ? 'in-view' : ''}`}
         >
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             About
           </span>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-16 items-start">

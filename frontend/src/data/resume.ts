@@ -122,7 +122,7 @@ export const education = [
     degree: 'MBA, Information Technology',
     institution: 'Kakinada Institute of Engineering & Technology',
     location: 'Kakinada, India',
-    period: 'Jul 2019 – Sep 2021',
+    period: 'Sep 2019 – Sep 2021',
   },
   {
     degree: 'BSc, Computer and Information Sciences',

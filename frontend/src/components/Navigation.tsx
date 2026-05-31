@@ -3,21 +3,38 @@
 import { useState, useEffect } from 'react'
 
 const links = [
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Projects', href: '#projects' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'About', href: '#about', id: 'about' },
+  { label: 'Skills', href: '#skills', id: 'skills' },
+  { label: 'Experience', href: '#experience', id: 'experience' },
+  { label: 'Projects', href: '#projects', id: 'projects' },
+  { label: 'Contact', href: '#contact', id: 'contact' },
 ]
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [active, setActive] = useState('')
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  // Highlight whichever section is in the centre of the viewport
+  useEffect(() => {
+    const observers: IntersectionObserver[] = []
+    links.forEach(({ id }) => {
+      const el = document.getElementById(id)
+      if (!el) return
+      const obs = new IntersectionObserver(
+        ([entry]) => { if (entry.isIntersecting) setActive(id) },
+        { rootMargin: '-40% 0px -50% 0px' }
+      )
+      obs.observe(el)
+      observers.push(obs)
+    })
+    return () => observers.forEach((o) => o.disconnect())
   }, [])
 
   return (
@@ -43,14 +60,30 @@ export default function Navigation() {
             <a
               key={l.href}
               href={l.href}
-              className="text-sm text-[#737373] hover:text-[#e8e8e8] transition-colors duration-200"
+              className={`nav-link text-sm transition-colors duration-200 pb-0.5 ${
+                active === l.id
+                  ? 'text-[#e8e8e8] active'
+                  : 'text-[#737373] hover:text-[#e8e8e8]'
+              }`}
             >
               {l.label}
             </a>
           ))}
           <a
+            href="/resume.pdf"
+            download="Satya_Sai_Satyavarapu_Resume.pdf"
+            className="flex items-center gap-1.5 text-sm text-[#737373] hover:text-[#e8e8e8] transition-colors duration-200"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+              <polyline points="7 10 12 15 17 10" />
+              <line x1="12" y1="15" x2="12" y2="3" />
+            </svg>
+            Resume
+          </a>
+          <a
             href="#contact"
-            className="text-sm px-4 py-2 rounded-md bg-[#3b82f6] hover:bg-[#2563eb] text-white font-medium transition-colors duration-200"
+            className="text-sm px-4 py-2 rounded-md bg-[#3b82f6] hover:bg-[#2563eb] text-white font-medium transition-all duration-200 hover:shadow-lg hover:shadow-[#3b82f6]/25"
           >
             Hire Me
           </a>
@@ -92,7 +125,9 @@ export default function Navigation() {
               key={l.href}
               href={l.href}
               onClick={() => setOpen(false)}
-              className="py-3 text-sm text-[#737373] hover:text-[#e8e8e8] border-b border-[#111] last:border-0 transition-colors"
+              className={`py-3 text-sm border-b border-[#111] last:border-0 transition-colors ${
+                active === l.id ? 'text-[#e8e8e8]' : 'text-[#737373] hover:text-[#e8e8e8]'
+              }`}
             >
               {l.label}
             </a>

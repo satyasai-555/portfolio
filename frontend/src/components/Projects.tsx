@@ -10,7 +10,7 @@ export default function Projects() {
     <section id="projects" className="py-24 px-6 border-t border-[#111]">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''}`}>
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             Projects
           </span>
           <h2 className="text-3xl font-bold text-[#e8e8e8] mb-14">What I&apos;ve Built</h2>
@@ -19,7 +19,7 @@ export default function Projects() {
             {projects.map((project) => (
               <article
                 key={project.title}
-                className="group flex flex-col bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#252525] transition-all duration-300"
+                className="card-lift group flex flex-col bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-6 hover:border-[#2a2a2a]"
               >
                 {/* Badge + title */}
                 <div className="flex items-start justify-between gap-3 mb-4">

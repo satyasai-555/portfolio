@@ -62,7 +62,7 @@ export default function Contact() {
     <section id="contact" className="py-24 px-6 border-t border-[#111]">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''}`}>
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             Contact
           </span>
           <div className="grid lg:grid-cols-[1fr_1fr] gap-16">
@@ -137,7 +137,7 @@ export default function Contact() {
                     value={form.name}
                     onChange={(e) => setForm((f) => ({ ...f, name: e.target.value }))}
                     placeholder="John Smith"
-                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] focus:outline-none focus:border-[#3b82f6]/50 transition-colors"
+                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] input-focus outline-none"
                   />
                 </div>
                 <div>
@@ -148,7 +148,7 @@ export default function Contact() {
                     value={form.email}
                     onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                     placeholder="john@company.com"
-                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] focus:outline-none focus:border-[#3b82f6]/50 transition-colors"
+                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] input-focus outline-none"
                   />
                 </div>
                 <div>
@@ -159,7 +159,7 @@ export default function Contact() {
                     value={form.message}
                     onChange={(e) => setForm((f) => ({ ...f, message: e.target.value }))}
                     placeholder="Tell me about the opportunity or project..."
-                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] focus:outline-none focus:border-[#3b82f6]/50 transition-colors resize-none"
+                    className="w-full bg-[#0f0f0f] border border-[#1a1a1a] rounded-lg px-4 py-3 text-sm text-[#e8e8e8] placeholder-[#555] input-focus outline-none resize-none"
                   />
                 </div>
 

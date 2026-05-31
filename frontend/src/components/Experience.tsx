@@ -10,7 +10,7 @@ export default function Experience() {
     <section id="experience" className="py-24 px-6 border-t border-[#111]">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''}`}>
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             Experience
           </span>
           <h2 className="text-3xl font-bold text-[#e8e8e8] mb-14">Work History</h2>
@@ -26,7 +26,7 @@ export default function Experience() {
                   <div
                     className={`absolute left-0 top-[6px] w-[15px] h-[15px] rounded-full border-2 ${
                       job.current
-                        ? 'border-[#3b82f6] bg-[#3b82f6]/20'
+                        ? 'dot-pulse border-[#3b82f6] bg-[#3b82f6]/20'
                         : 'border-[#2a2a2a] bg-[#111]'
                     }`}
                   />

@@ -88,3 +88,73 @@ body {
 .pulse-green {
   animation: pulseGreen 2.5s ease-in-out infinite;
 }
+
+/* ── Card hover lift ───────────────────────────── */
+.card-lift {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.55);
+}
+
+/* ── Skill tag interactive glow ─────────────────── */
+.skill-tag {
+  transition: color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.skill-tag:hover {
+  color: #e8e8e8 !important;
+  border-color: rgba(59, 130, 246, 0.5) !important;
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.15);
+  background: rgba(59, 130, 246, 0.06) !important;
+}
+
+/* ── Current-role timeline dot pulse ───────────── */
+@keyframes dotPulse {
+  0%   { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(59, 130, 246, 0);    }
+  100% { box-shadow: 0 0 0 0   rgba(59, 130, 246, 0);    }
+}
+.dot-pulse {
+  animation: dotPulse 2.2s ease-in-out infinite;
+}
+
+/* ── Nav active link underline ──────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: #3b82f6;
+  transition: width 0.25s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* ── Focus ring for form inputs ─────────────────── */
+.input-focus:focus {
+  border-color: rgba(59, 130, 246, 0.6) !important;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: none;
+}
+
+/* ── Section accent label shimmer ───────────────── */
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position:  200% center; }
+}
+.section-label {
+  background: linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #3b82f6 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 4s linear infinite;
+}

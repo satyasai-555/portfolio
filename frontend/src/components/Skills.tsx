@@ -10,7 +10,7 @@ export default function Skills() {
     <section id="skills" className="py-24 px-6 border-t border-[#111]">
       <div className="max-w-6xl mx-auto">
         <div ref={ref} className={`reveal ${inView ? 'in-view' : ''}`}>
-          <span className="text-xs uppercase tracking-[0.15em] text-[#3b82f6] font-medium mb-4 block">
+          <span className="section-label text-xs uppercase tracking-[0.15em] font-medium mb-4 block">
             Skills
           </span>
           <h2 className="text-3xl font-bold text-[#e8e8e8] mb-14">Technical Stack</h2>
@@ -28,7 +28,7 @@ export default function Skills() {
                   {group.items.map((item) => (
                     <span
                       key={item}
-                      className="px-3 py-1 rounded-md text-xs font-medium bg-[#111] border border-[#1e1e1e] text-[#888] hover:text-[#e8e8e8] hover:border-[#2a2a2a] transition-all duration-200 cursor-default"
+                      className="skill-tag px-3 py-1 rounded-md text-xs font-medium bg-[#111] border border-[#1e1e1e] text-[#888] cursor-default"
                     >
                       {item}
                     </span>

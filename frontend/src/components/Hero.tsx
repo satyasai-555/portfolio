@@ -65,6 +65,14 @@ export default function Hero() {
                 View Projects
                 <span className="text-[#737373]">→</span>
               </a>
+              <a
+                href="/resume.pdf"
+                download="Satya_Sai_Satyavarapu_Resume.pdf"
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#111] hover:bg-[#181818] border border-[#222] text-[#888] hover:text-[#e8e8e8] font-medium text-sm transition-all duration-200"
+              >
+                <DownloadIcon />
+                Resume
+              </a>
             </div>
 
             {/* Social links */}
@@ -127,6 +135,16 @@ function SocialLink({
       {children}
       {label}
     </a>
+  )
+}
+
+function DownloadIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <polyline points="7 10 12 15 17 10" />
+      <line x1="12" y1="15" x2="12" y2="3" />
+    </svg>
   )
 }
 

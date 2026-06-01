@@ -8,7 +8,7 @@ export const personalInfo = {
   linkedin: 'https://linkedin.com/in/satyasai-satyavarapu',
   github: 'https://github.com/satyasai-555',
   summary:
-    'Results-driven Full Stack Engineer with 4.5+ years of experience specializing in frontend architecture and scalable backend workflows. Expert in React.js, TypeScript, Next.js, React Native, and Node.js. Proven track record of optimizing frontend performance, designing reusable component systems, and building event-driven backend architectures, real-time WebSocket systems, and production-ready AI integrations.',
+    'Frontend-focused Software Engineer with 4.5+ years of experience building scalable, high-performance web and mobile applications using React.js, TypeScript, Next.js, and React Native. Experienced in frontend architecture, performance optimization, reusable component systems, and responsive UI development. Additionally experienced in Node.js backend services, real-time systems, and AI-driven integrations for full-stack product development.',
 }
 
 export const stats = [
@@ -16,6 +16,14 @@ export const stats = [
   { value: '40+', label: 'UI Components' },
   { value: '50%', label: 'Perf Improvement' },
   { value: '3', label: 'Core Products' },
+]
+
+export const achievements = [
+  { metric: '50%', text: 'Reduced JS bundle size improving Lighthouse score from 55 → 85' },
+  { metric: '40+', text: 'Reusable UI components accelerating feature delivery by 30%' },
+  { metric: '100+', text: 'AI processing pipeline jobs handled per day' },
+  { metric: '0ms', text: 'Polling eliminated — replaced with WebSocket streaming' },
+  { metric: '↑', text: 'Resolved production memory leaks improving application uptime' },
 ]
 
 export const skills = [
@@ -57,11 +65,11 @@ export const experience = [
     period: 'May 2024 – Present',
     current: true,
     achievements: [
-      'Scaled engineering scope from frontend delivery to full backend ownership — API architecture, MongoDB schemas, and queue infrastructure.',
-      'Reduced initial JS payload by 50% (1.8 MB → 900 KB) via route-based code splitting; Lighthouse scores rose from mid-50s to mid-80s.',
-      'Built event-driven pipeline with BullMQ and Redis for third-party AI workflows, with custom retry and automated error handling.',
-      'Replaced legacy polling with real-time WebSocket streams using Socket.io, significantly improving client-side efficiency.',
-      'Resolved critical memory leaks in long-lived WebSocket connections by redesigning lifecycle management, boosting production uptime.',
+      'Expanded from frontend development to backend ownership by building APIs, MongoDB schemas, and queue-based workflows for product features.',
+      'Engineered a 50% reduction in initial JavaScript payload size (from 1.8 MB to under 900 KB) using route-based code splitting and dependency pruning, elevating Lighthouse Performance scores from the mid-50s to the mid-80s.',
+      'Built an event-driven workflow using BullMQ and Redis to manage AI processing with retry handling.',
+      'Established real-time job tracking using WebSockets and Socket.io, replacing polling and improving live status updates for users.',
+      'Resolved WebSocket memory leaks by improving connection handling, increasing application stability in production.',
     ],
   },
   {
@@ -71,10 +79,10 @@ export const experience = [
     period: 'Jan 2022 – Apr 2024',
     current: false,
     achievements: [
-      'Shipped high-performance, responsive UIs across web (React) and mobile (React Native) with strict feature parity.',
-      'Built a shared atomic component library with 40+ reusable primitives, accelerating development velocity by 30%.',
-      'Fixed rendering bottlenecks on lower-spec Android devices via Redux selector optimization, memoization, and list virtualization.',
-      'Formalized declarative API data contracts with product, QA, and backend teams — unblocking parallel feature development.',
+      'Shipped high-performance, responsive cross-platform user interfaces across web (React) and mobile (React Native) ecosystems, maintaining strict feature parity and design consistency.',
+      'Developed a reusable component library with 40+ shared UI components, reducing duplicate code and improving development speed.',
+      'Improved application loading and rendering performance on lower-end Android devices using optimized Redux selectors, memoization, lazy loading, and list virtualization.',
+      'Worked closely with QA, product, and backend teams to finalize API requirements and speed up feature integration.',
     ],
   },
 ]
@@ -84,35 +92,35 @@ export const projects = [
     title: 'Aauti Marketplace',
     badge: 'Company Project',
     description:
-      'Async AI video generation pipeline processing 50–100+ jobs daily, with centralized webhook handling and secure server-side API routing.',
+      'AI video generation workflow handling 50–100+ daily jobs with webhook retry logic and secure backend API routing.',
     tech: ['MERN Stack', 'Redis', 'BullMQ', 'WebSockets', 'HeyGen API'],
     highlights: [
-      'Async pipeline offloads AI compute to isolated Redis workers, keeping primary server load-free.',
-      'Webhook ingest handler with automated fallback recovery guards data integrity against API drops.',
-      'Server-side routers protect API credentials while supporting long-running operations.',
+      'Architected an AI video generation workflow handling 50–100+ daily jobs using Redis, BullMQ, and background workers.',
+      'Created webhook handling with retry and fallback logic to handle third-party API failures reliably.',
+      'Built backend APIs to securely connect with external AI services while protecting API keys.',
     ],
   },
   {
     title: 'Aauti School',
     badge: 'Company Project',
     description:
-      'K-12 educational platform with grade-specific curriculum delivery, complex Redux state trees, and dynamic lesson trajectory mapping.',
+      'K-12 educational platform with grade-based curriculum delivery, dynamic lesson planning, and complex Redux state management.',
     tech: ['React', 'React Native', 'Redux', 'RESTful APIs'],
     highlights: [
-      'Complex client-side state management for a scalable, grade-specific learning platform.',
-      'Dynamic curriculum endpoints let educators modify lesson paths without static file overhead.',
+      'Developed dynamic curriculum flows and state management for grade-based learning experiences.',
+      'Integrated curriculum APIs to support dynamic lesson planning and content updates.',
     ],
   },
   {
     title: 'Content Guard-AI',
-    badge: 'Live Project',
+    badge: 'Personal Project',
     description:
-      'Full-stack multi-modal content moderation engine for text, image, PDF, and video assets — powered by Gemini API with Docker-isolated services.',
+      'Multi-modal content moderation platform analyzing text, PDFs, images, and videos using Gemini API with configurable risk scoring.',
     tech: ['Next.js', 'FastAPI', 'MongoDB', 'Docker', 'Gemini API'],
     highlights: [
-      'Multi-modal moderation with dynamic safety thresholds across text, image, PDF, and video.',
-      'Custom token-bucket rate limiting middleware for predictable API cost control.',
-      'Fully containerized with Docker for deterministic local dev and Vercel deployments.',
+      'Built a multi-modal content moderation platform analyzing text, PDFs, images, and videos using Gemini API.',
+      'Developed configurable risk scoring and flagged-content workflows to detect unsafe content.',
+      'Deployed Dockerized setup ensuring consistent environments across development and production.',
     ],
   },
 ]
@@ -128,6 +136,6 @@ export const education = [
     degree: 'BSc, Computer and Information Sciences',
     institution: 'Aditya Degree College',
     location: 'Kakinada, India',
-    period: 'Apr 2015 – Jun 2018',
+    period: 'Jul 2015 – Apr 2018',
   },
 ]

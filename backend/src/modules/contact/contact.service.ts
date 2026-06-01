@@ -1,67 +1,68 @@
 import { Injectable, Logger } from '@nestjs/common'
+import { Resend } from 'resend'
 import { CreateContactDto } from './dto/create-contact.dto'
-import * as nodemailer from 'nodemailer'
 
 @Injectable()
 export class ContactService {
   private readonly logger = new Logger(ContactService.name)
+  private readonly resend: Resend | null
+
+  constructor() {
+    this.resend = process.env.RESEND_API_KEY
+      ? new Resend(process.env.RESEND_API_KEY)
+      : null
+  }
 
   async submit(dto: CreateContactDto): Promise<void> {
-    this.logger.log(`New contact form submission from ${dto.name} <${dto.email}>`)
+    this.logger.log(`New submission from ${dto.name} <${dto.email}>`)
 
-    const smtpUser = process.env.SMTP_USER
-    const smtpPass = process.env.SMTP_PASS
     const mailTo = process.env.MAIL_TO
 
-    if (!smtpUser || !smtpPass || !mailTo) {
-      this.logger.warn('SMTP not configured — message logged below')
-      this.logger.log(`From: ${dto.name} <${dto.email}>\n\n${dto.message}`)
+    if (!this.resend || !mailTo) {
+      this.logger.warn('RESEND_API_KEY or MAIL_TO not set — logging to console')
+      this.logger.log(`Name: ${dto.name}\nEmail: ${dto.email}\n\n${dto.message}`)
       return
     }
 
-    // Return to browser immediately — send email in background
-    this.sendEmail(smtpUser, smtpPass, mailTo, dto)
+    // Return to browser immediately, deliver email in background
+    this.send(mailTo, dto)
   }
 
-  private sendEmail(
-    smtpUser: string,
-    smtpPass: string,
-    mailTo: string,
-    dto: CreateContactDto,
-  ): void {
-    const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST ?? 'smtp.gmail.com',
-      port: Number(process.env.SMTP_PORT ?? 587),
-      secure: false,
-      auth: { user: smtpUser, pass: smtpPass },
-      connectionTimeout: 10_000,
-      greetingTimeout: 8_000,
-      socketTimeout: 10_000,
-    })
-
-    transporter
-      .sendMail({
-        from: `"Portfolio Contact" <${smtpUser}>`,
+  private send(mailTo: string, dto: CreateContactDto): void {
+    this.resend!.emails
+      .send({
+        from: 'Portfolio Contact <onboarding@resend.dev>',
         to: mailTo,
         replyTo: dto.email,
         subject: `Portfolio enquiry from ${dto.name}`,
-        text: `Name: ${dto.name}\nEmail: ${dto.email}\n\n${dto.message}`,
         html: `
-          <div style="font-family:sans-serif;max-width:560px;padding:24px">
-            <h2 style="margin:0 0 16px;font-size:18px">New portfolio enquiry</h2>
-            <p style="margin:0 0 4px"><strong>Name:</strong> ${dto.name}</p>
-            <p style="margin:0 0 16px"><strong>Email:</strong>
-              <a href="mailto:${dto.email}">${dto.email}</a>
+          <div style="font-family:sans-serif;max-width:560px;padding:24px;color:#111">
+            <h2 style="margin:0 0 16px;font-size:18px;color:#111">
+              New portfolio enquiry
+            </h2>
+            <p style="margin:0 0 6px">
+              <strong>Name:</strong> ${dto.name}
             </p>
-            <hr style="border:none;border-top:1px solid #eee;margin:0 0 16px"/>
-            <p style="white-space:pre-wrap;margin:0">${dto.message}</p>
+            <p style="margin:0 0 20px">
+              <strong>Email:</strong>
+              <a href="mailto:${dto.email}" style="color:#3b82f6">${dto.email}</a>
+            </p>
+            <hr style="border:none;border-top:1px solid #eee;margin:0 0 20px"/>
+            <p style="margin:0;white-space:pre-wrap;line-height:1.6">${dto.message}</p>
           </div>
         `,
       })
-      .then(() => this.logger.log(`Email delivered to ${mailTo}`))
+      .then(({ data, error }) => {
+        if (error) {
+          this.logger.error(`Resend error: ${error.message}`)
+          this.logger.log(`Undelivered — ${dto.name} <${dto.email}>:\n${dto.message}`)
+        } else {
+          this.logger.log(`Email sent, id: ${data?.id}`)
+        }
+      })
       .catch((err: Error) => {
-        this.logger.error(`SMTP error: ${err.message}`)
-        this.logger.log(`Message content — ${dto.name} <${dto.email}>:\n${dto.message}`)
+        this.logger.error(`Resend exception: ${err.message}`)
+        this.logger.log(`Undelivered — ${dto.name} <${dto.email}>:\n${dto.message}`)
       })
   }
 }

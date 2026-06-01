@@ -1,33 +1,42 @@
+'use client'
+
+import Image from 'next/image'
+import { useState } from 'react'
 import { personalInfo, stats } from '@/data/resume'
 
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center px-6 overflow-hidden">
       {/* Subtle grid overlay */}
-      <div className="absolute inset-0 pointer-events-none"
+      <div
+        className="absolute inset-0 pointer-events-none"
         style={{
           backgroundImage:
             'linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px)',
           backgroundSize: '72px 72px',
         }}
       />
-      {/* Blue glow — top left */}
-      <div className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full pointer-events-none"
+      {/* Blue glow */}
+      <div
+        className="absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(circle, rgba(59,130,246,0.07) 0%, transparent 70%)' }}
       />
 
       <div className="relative max-w-6xl mx-auto w-full pt-28 pb-20">
-        <div className="grid lg:grid-cols-[1fr_320px] gap-16 items-center">
+        <div className="grid lg:grid-cols-[1fr_300px] gap-16 items-center">
 
-          {/* Left — content */}
+          {/* ── Left — content ────────────────────────── */}
           <div>
-            {/* Available badge */}
+            {/* Mobile avatar (above name on small screens) */}
+            <div className="flex lg:hidden justify-center mb-8 hero-line hero-line-1">
+              <AvatarCard size="sm" />
+            </div>
+
             <div className="hero-line hero-line-1 inline-flex items-center gap-2 mb-7">
               <span className="w-2 h-2 rounded-full bg-[#22c55e] pulse-green" />
               <span className="text-sm text-[#737373]">Open to opportunities</span>
             </div>
 
-            {/* Name */}
             <p className="hero-line hero-line-2 text-[#737373] text-lg mb-1">Hi, I&apos;m</p>
             <h1 className="hero-line hero-line-3 text-[56px] sm:text-[72px] lg:text-[80px] font-bold leading-[1.05] tracking-tight mb-6">
               <span className="text-[#e8e8e8]">Satya Sai</span>
@@ -35,7 +44,6 @@ export default function Hero() {
               <span className="text-[#3b82f6]">Satyavarapu</span>
             </h1>
 
-            {/* Subtitle */}
             <p className="hero-line hero-line-4 text-xl text-[#737373] mb-4">
               Full Stack Engineer
             </p>
@@ -62,8 +70,7 @@ export default function Hero() {
                 href="#projects"
                 className="inline-flex items-center gap-2 px-5 py-3 rounded-lg bg-[#111] hover:bg-[#181818] border border-[#222] text-[#e8e8e8] font-medium text-sm transition-all duration-200"
               >
-                View Projects
-                <span className="text-[#737373]">→</span>
+                View Projects <span className="text-[#737373]">→</span>
               </a>
               <a
                 href="/resume.pdf"
@@ -77,15 +84,9 @@ export default function Hero() {
 
             {/* Social links */}
             <div className="hero-line hero-line-6 flex flex-wrap items-center gap-6">
-              <SocialLink href={personalInfo.github} label="GitHub">
-                <GitHubIcon />
-              </SocialLink>
-              <SocialLink href={personalInfo.linkedin} label="LinkedIn">
-                <LinkedInIcon />
-              </SocialLink>
-              <SocialLink href={`mailto:${personalInfo.email}`} label={personalInfo.email}>
-                <EmailIcon />
-              </SocialLink>
+              <SocialLink href={personalInfo.github} label="GitHub"><GitHubIcon /></SocialLink>
+              <SocialLink href={personalInfo.linkedin} label="LinkedIn"><LinkedInIcon /></SocialLink>
+              <SocialLink href={`mailto:${personalInfo.email}`} label={personalInfo.email}><EmailIcon /></SocialLink>
               <span className="flex items-center gap-1.5 text-sm text-[#666]">
                 <LocationIcon />
                 {personalInfo.location}
@@ -93,17 +94,22 @@ export default function Hero() {
             </div>
           </div>
 
-          {/* Right — stats (desktop only) */}
-          <div className="hidden lg:grid grid-cols-2 gap-3 hero-line hero-stats">
-            {stats.map((s) => (
-              <div
-                key={s.label}
-                className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-5 text-center hover:border-[#2a2a2a] transition-colors duration-300"
-              >
-                <div className="text-3xl font-bold text-[#3b82f6] mb-1">{s.value}</div>
-                <div className="text-xs text-[#666] leading-snug">{s.label}</div>
-              </div>
-            ))}
+          {/* ── Right — avatar + stats (desktop only) ─── */}
+          <div className="hidden lg:flex flex-col items-center gap-6 hero-line hero-stats">
+            <AvatarCard size="lg" />
+
+            {/* Stats below avatar */}
+            <div className="grid grid-cols-2 gap-3 w-full">
+              {stats.map((s) => (
+                <div
+                  key={s.label}
+                  className="bg-[#0f0f0f] border border-[#1a1a1a] rounded-xl p-4 text-center hover:border-[#2a2a2a] transition-colors duration-300"
+                >
+                  <div className="text-2xl font-bold text-[#3b82f6] mb-0.5">{s.value}</div>
+                  <div className="text-[10px] text-[#666] leading-snug">{s.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -116,15 +122,93 @@ export default function Hero() {
   )
 }
 
-function SocialLink({
-  href,
-  label,
-  children,
-}: {
-  href: string
-  label: string
-  children: React.ReactNode
-}) {
+/* ─── Avatar with hover summary card ─────────────────────────── */
+function AvatarCard({ size }: { size: 'sm' | 'lg' }) {
+  const [imgError, setImgError] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const dim = size === 'lg' ? 176 : 112
+
+  return (
+    <div
+      className="relative select-none"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {/* Avatar circle */}
+      <div
+        className="rounded-full overflow-hidden ring-2 ring-[#3b82f6]/40 ring-offset-4 ring-offset-[#0a0a0a] transition-all duration-300"
+        style={{
+          width: dim,
+          height: dim,
+          boxShadow: hovered ? '0 0 32px rgba(59,130,246,0.2)' : undefined,
+        }}
+      >
+        {!imgError ? (
+          <Image
+            src="/avatar.jpg"
+            alt="Satya Sai Satyavarapu"
+            width={dim}
+            height={dim}
+            className="w-full h-full object-cover"
+            onError={() => setImgError(true)}
+            priority
+          />
+        ) : (
+          /* Initials fallback — replace /public/avatar.jpg to show real photo */
+          <div
+            className="w-full h-full flex items-center justify-center text-[#3b82f6] font-bold"
+            style={{
+              background: 'linear-gradient(135deg, #0f0f1a 0%, #111827 100%)',
+              fontSize: size === 'lg' ? '3rem' : '1.75rem',
+            }}
+          >
+            SS
+          </div>
+        )}
+      </div>
+
+      {/* Online dot */}
+      <span
+        className="absolute bottom-2 right-2 rounded-full bg-[#22c55e] border-2 border-[#0a0a0a]"
+        style={{ width: size === 'lg' ? 14 : 10, height: size === 'lg' ? 14 : 10 }}
+      />
+
+      {/* Hover — summary card (desktop large only) */}
+      {size === 'lg' && (
+        <div
+          className="absolute bottom-[calc(100%+12px)] left-1/2 -translate-x-1/2 w-72 bg-[#111] border border-[#222] rounded-xl p-4 shadow-2xl pointer-events-none transition-all duration-250"
+          style={{
+            opacity: hovered ? 1 : 0,
+            transform: `translateX(-50%) translateY(${hovered ? 0 : 8}px)`,
+          }}
+        >
+          {/* Arrow */}
+          <div className="absolute -bottom-[5px] left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#111] border-r border-b border-[#222] rotate-45" />
+
+          <div className="flex items-center gap-2 mb-3">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#22c55e]" />
+            <span className="text-[10px] text-[#22c55e] font-medium uppercase tracking-widest">
+              Open to work
+            </span>
+          </div>
+          <p className="text-xs text-[#888] leading-relaxed">
+            Frontend-focused Full Stack Engineer with{' '}
+            <span className="text-[#c8c8c8]">4.5+ years</span> of experience in{' '}
+            <span className="text-[#c8c8c8]">React, Next.js &amp; Node.js</span>.
+            Building scalable UIs and event-driven backends from Hyderabad, India.
+          </p>
+          <div className="mt-3 pt-3 border-t border-[#1a1a1a] flex items-center justify-between">
+            <span className="text-[10px] text-[#555]">Caprus IT · 4.5 yrs</span>
+            <span className="text-[10px] text-[#555]">Hyderabad, India</span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+/* ─── Shared sub-components ──────────────────────────────────── */
+function SocialLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (
     <a
       href={href}
